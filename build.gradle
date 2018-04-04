@@ -1,0 +1,49 @@
+plugins {
+    id "org.springframework.boot" version "1.5.9.RELEASE"
+    id "org.flywaydb.flyway" version "5.0.5"
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    jcenter()
+}
+
+jar {
+    baseName = 'springboot-one-template'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.postgresql:postgresql:42.1.4")
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // "out-of-the-box" support for java8 date API
+    compile("org.hibernate:hibernate-java8:5.2.12.Final")
+    compile("org.hibernate:hibernate-core:5.2.12.Final")
+    compile("org.hibernate:hibernate-entitymanager:5.2.12.Final")
+
+    testCompile("com.h2database:h2")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.2.1'
+}
+
+flyway {
+    url = ''
+    user = ''
+    password = ''
+    table = 'SCHEMA_VERSION'
+}
